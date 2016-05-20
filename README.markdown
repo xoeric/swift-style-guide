@@ -19,7 +19,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Extension Function Prefix](#extension-function-prefix)
   * [Language](#language)
 * [Code Organization](#code-organization)
-  * [Extensions](#extension)
+  * [Protocol Conformance](#protocol-conformance)
   * [Unused Code](#unused-code)
   * [Minimal Imports](#minimal-imports)
 * [Spacing](#spacing)
