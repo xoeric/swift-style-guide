@@ -21,6 +21,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
 * [Code Organization](#code-organization)
   * [Protocol Conformance](#protocol-conformance)
   * [Delegate Protocols](#delegate-protocols)
+  * [Trailing Comma](#trailing-comma)
   * [Unused Code](#unused-code)
   * [Minimal Imports](#minimal-imports)
 * [Spacing](#spacing)
@@ -334,6 +335,34 @@ extension SomeTableViewController: SomeTableCellDelegate {
         // Implementation of cellbuttonwasTapped method
     }
 }
+```
+### Trailing Comma
+
+For array and dictionary literals, unless the literal is very short, it should be split into multiple lines, with the opening symbols on their own line, each item or key-value pair on its own line, and the closing symbol on its own line. The last item or key-value pair should have a trailing comma to facilitate future insertion/editing. Xcode will handle alignment sanely.
+
+**Preferred:**
+```swift
+let anArray = [
+    object1,
+    object2,
+    object3,
+]
+
+let aDictionary = [
+    "key1": value1,
+    "key2": value2,
+]
+```
+
+**Not Preferred:**
+```swift
+let anArray = [
+    object1,
+    object2,
+    object3 //no trailing comma
+]
+
+let aDictionary = ["key1": value1, "key2": value2] //how can you even read that?!
 ```
 
 ### Unused Code
