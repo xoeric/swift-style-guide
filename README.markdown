@@ -52,7 +52,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Extending Lifetime](#extending-lifetime)
 * [Access Control](#access-control)
 * [Control Flow](#control-flow)
-  * [Enumerations](#enumerations)
+  * [Fast Enumerations](#fast-enumerations)
   * [Switch](#switch)
 * [Golden Path](#golden-path)
   * [Unwrapping Multiple Optionals](#unwrapping-multiple-optionals)
@@ -1096,7 +1096,7 @@ class TimeMachine {
 
 ## Control Flow
 
-### Enumerations
+### Fast Enumerations
 Prefer the `for-in` style of `for` loop over the `while-condition-increment` style.
 
 **Preferred:**
