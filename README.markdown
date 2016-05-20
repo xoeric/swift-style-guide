@@ -31,6 +31,10 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Final](#final)
 * [Function Declarations](#function-declarations)
 * [Closure Expressions](#closure-expressions)
+  * [Trailing Closure Syntax](#trailing-closure-syntax)
+  * [Shorthand Argument Syntax](#shorthand-argument-syntax)
+  * [Implicit Return](#implicit-return)
+  * [Chained Methods](#chained-methods) 
 * [Types](#types)
   * [Constants](#constants)
   * [Static Methods and Variable Type Properties](#static-methods-and-variable-type-properties)
@@ -519,6 +523,8 @@ func reticulateSplines(spline: [Double], adjustmentFactor: Double,
 
 ## Closure Expressions
 
+### Trailing Closure Syntax
+
 Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. Give the closure parameters descriptive names.
 
 **Preferred:**
@@ -551,6 +557,27 @@ UIView.animateWithDuration(1.0,
 }
 ```
 
+### Shorthand Argument Syntax
+
+Only use shorthand argument syntax for simple one-line closure implementations
+
+**Preferred:**
+```swift
+let doubled = [2, 3, 4].map { $0 * 2 } // [4, 6, 8]
+```
+
+For all other cases, explicitly define the argument(s)
+
+**Preferred:**
+```swift
+let names = ["George Washington", "Martha Washington", "Abe Lincoln"]
+let emails = names.map { fullname in
+    let dottedName = fullname.stringByReplacingOccurrencesOfString(" ", withString: ".")
+    return dottedName.lowercaseString + "@whitehouse.gov"
+}
+```
+
+### Implicit Return
 For single-expression closures where the context is clear, use implicit returns:
 
 ```swift
@@ -559,6 +586,7 @@ attendeeList.sort { a, b in
 }
 ```
 
+### Chained Methods
 Chained methods using trailing closures should be clear and easy to read in context. Decisions on spacing, line breaks, and when to use named versus anonymous arguments is left to the discretion of the author. Examples:
 
 ```swift
