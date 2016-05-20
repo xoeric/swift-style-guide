@@ -16,6 +16,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Selectors](#selectors)
   * [Generics](#generics)
   * [Class Prefixes](#class-prefixes)
+  * [Extension Function Prefix](#extension-function-prefix)
   * [Language](#language)
 * [Code Organization](#code-organization)
   * [Extensions](#extension)
@@ -185,6 +186,25 @@ Swift types are automatically namespaced by the module that contains them and yo
 import SomeModule
 
 let myClass = MyModule.UsefulClass()
+```
+
+### Extension Function Prefix
+Prefixes are still necessary on extension methods of classes not in the current module.
+
+*Note: Unlike Obj-C, the Swift compiler will complain about duplicate method names.*
+
+**Preferred:**
+```swift
+extension UIColor {
+    static func use_primaryColor() -> UIColor {
+        return UIColor(
+            red: 100.0 / 255.0,
+            green: 100.0 / 255.0,
+            blue: 100.0 / 255.0,
+            alpha: 1.0
+        )
+    }
+}
 ```
 
 ### Selectors
