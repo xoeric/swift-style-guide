@@ -722,6 +722,15 @@ In Sprite Kit code, use `CGFloat` if it makes the code more succinct by avoiding
 
 ### Constants
 
+* Define constants for unchanging pieces of data in the code. Some examples are CGFloat constants for cell heights, string constants for cell identifiers, key names (for KVC and dictionaries), or segue identifiers.
+* Where possible, keep constants private to the file they are related to.
+* File-level constants should be declared with private let.
+* File-level constants should be capital camel-cased to indicate that they are named constants instead of properties.
+* Prefer declaring constants outside the scope of a class to give them static storage.
+* If the constant will be used outside of one file, private should be omitted.
+* If the constant will be used outside of the module, it should be declared public (mostly useful for Pods or shared libraries).
+* If the constant is declared within a class or struct, it should be declared static to avoid declaring one constant per instance.
+
 Constants are defined using the `let` keyword, and variables with the `var` keyword. Always use `let` instead of `var` if the value of the variable will not change.
 
 **Tip:** A good technique is to define everything using `let` and only change it to `var` if the compiler complains!
@@ -740,12 +749,71 @@ radius * Math.pi * 2 // circumference
 ```
 **Note:** The advantage of using a case-less enumeration is that it can't accidentally be instantiated and works as a pure namespace.
 
+```swift
+//SomeTableCell.swift
+
+//not declared private since it is used in another file
+let SomeTableCellIdentifier = "SomeTableCell"
+
+class SomeTableCell: UITableViewCell {
+    ...
+}
+```
+
+```swift
+//ATableViewController.swift
+
+//declared private since it isn't used outside this file
+private let RowHeight: CGFloat = 150.0
+
+class ATableViewController: UITableViewController {
+
+    ...
+
+    private func configureTableView() {
+        tableView.rowHeight = RowHeight
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCellWithIdentifier(SomeTableCellIdentifier, forIndexPath: indexPath)
+    }
+}
+```
+
 **Not Preferred:**
 ```swift
 let e  = 2.718281828459045235360287  // pollutes global namespace
 let pi = 3.141592653589793238462643
 
 radius * pi * 2 // is pi instance data or a global constant?
+```
+
+Where appropriate, constants can also be grouped using an enum with a rawValue type that is relevant to the type you need to work with. An enum with a rawValue of type String will implicitly assign its rawValue from the name of the case if nothing is already explicitly defined for the rawValue. This can be useful when all the names of the cases match with the value of the constant. Be aware that if you use an enum for constants, you need to explicitly use rawValue every time you need to access the value of the constant:
+
+**Preferred:**
+```swift
+enum HTTPMethods: String {
+    case GET
+    case PUT
+    case POST
+    case PATCH
+    case DELETE
+
+    // Explicitly defined rawValue
+    case OptionsMethod = "OPTIONS"
+    // ...
+}
+
+print(HTTPMethods.OptionsMethod.rawValue) // "OPTIONS"
+print(HTTPMethods.POST.rawValue) // "POST"
+
+guard let url = NSURL(string: "http://www.example.com") else {
+    return
+}
+
+let mutableURLRequest = NSMutableURLRequest(URL: url)
+mutableURLRequest.HTTPMethod = HTTPMethods.POST.rawValue
+print(mutableURLRequest.HTTPMethod) // "POST"
 ```
 
 ### Static Methods and Variable Type Properties
