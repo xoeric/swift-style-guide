@@ -620,7 +620,25 @@ Static methods and type properties work similarly to global functions and global
 
 Declare variables and function return types as optional with `?` where a nil value is acceptable.
 
+#### Unwrapping
 Use implicitly unwrapped types declared with `!` only for instance variables that you know will be initialized later before use, such as subviews that will be set up in `viewDidLoad`.
+
+**Preferred:**
+```swift
+guard let url = NSURL(string: "http://www.example.com/") else {
+    return
+}
+
+UIApplication.sharedApplication().openURL(url)
+```
+
+**Not Preferred:**
+```swift
+// NSURL init(string:) is a failable initializer and will crash at runtime with a force unwrap if initialization fails!
+let url = NSURL(string: "http://www.example.com/")!
+
+UIApplication.sharedApplication().openURL(url)
+```
 
 When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain:
 
