@@ -681,6 +681,24 @@ if let unwrappedSubview = optionalSubview {
 }
 ```
 
+#### Downcast
+**Preferred:**
+```swift
+guard let detailViewController = segue.destinationViewController as? DetailViewController else {
+    return
+}
+
+detailViewController.person = person
+```
+
+**Not Preferred:**
+```swift
+// segue.destinationViewController is declared to be of type UIViewController, so forcing a downcast to type
+// DetailViewController here will crash if the type is not DetailViewController at runtime!
+let detailViewController = segue.destinationViewController as! DetailViewController
+detailViewController.person = person
+```
+
 ### Struct Initializers
 
 Use the native Swift struct initializers rather than the legacy CGGeometry constructors.
