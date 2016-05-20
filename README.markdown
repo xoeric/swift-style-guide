@@ -50,6 +50,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
 * [Semicolons](#semicolons)
 * [Parentheses](#parentheses)
 * [Operator Overloading And Custom Operators](#operator-overloading-and-custom-operators)
+* [Error Handling](#error-handling)
 * [Copyright Statement](#copyright-statement)
 * [Smiley Face](#smiley-face)
 * [Credits](#credits)
@@ -1095,6 +1096,30 @@ if (name == "Hello") {
 ## Operator Overloading And Custom Operators
 
 The use of operator overloading and custom operators is strongly discouraged as this can hurt readability and potentially create a significant amount of confusion for other developers on a shared project. There are cases that it would be necessary (ex. overloading == to conform to Equatable). When writing a custom operator or overloading an existing one, the operator function should call another explicitly named function that performs that actual work. For more guidance on best practices on this matter, view the guidelines at the bottom of this NSHipster article [Guidelines for Swift Operators](http://nshipster.com/swift-operators/#guidelines-for-swift-operators).
+
+## Error Handling
+
+### Forced-try Expression
+
+**Avoid using the forced-try expression**
+try! as a way to ignore errors from throwing methods as this will crash your app if the error actually gets thrown. Safely handle errors using a do statement along with try and catch. A rare reason to use the forced-try expression is similar to force unwrapping optionals; you actually want the app to crash (ideally during debugging before the app ships) to indicate an implementation error. An example of this would be loading a bundle resource that should always be there unless you forgot to include it or rename it.
+
+**Preferred:**
+```swift
+do {
+    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+    print(json)
+} catch {
+    print(error)
+}
+```
+
+**Not Preferred:**
+```swift
+// This will crash at runtime if there is an error parsing the JSON data!
+let json = try! NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+print(json)
+```
 
 ## Copyright Statement
 
