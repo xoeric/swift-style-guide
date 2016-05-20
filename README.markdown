@@ -54,6 +54,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
 * [Control Flow](#control-flow)
   * [Fast Enumerations](#fast-enumerations)
   * [Switch](#switch)
+  * [Loops](#loops)
 * [Golden Path](#golden-path)
   * [Unwrapping Multiple Optionals](#unwrapping-multiple-optionals)
   * [Failing Guards](#failing-guards)
@@ -1189,6 +1190,54 @@ switch anEnumInstanceWithAssociatedValue {
     case .Baz: print("Baz")
 }
 ```
+
+### Loops
+
+Use map when transforming Arrays (flatMap for Arrays of Optionals or Arrays of Arrays)
+
+**Preferred:**
+```swift
+let array = [1, 2, 3, 4, 5]
+let stringArray = array.map { item in
+    return "item \(item)"
+}
+
+let optionalArray: [Int?] = [1, nil, 3, 4, nil]
+let nonOptionalArray = optArray.flatMap { nonNilValue in
+    return nonNilValue * 2
+}
+
+let arrayOfArrays = [array, nonOptionalArray]
+let anotherStringArray = arrayOfArrays.flatmap { item in
+    return "thing \(item)"
+}
+```
+
+If you are not performing a transform, or if there are side effects do not use map/flatmap, use a for in loop instead.
+[When to use map, flatMap, or for loops in Swift](http://www.mokacoding.com/blog/when-to-use-map-flatmap-for).
+
+If you have an Array of Arrays and want to loop over all contents, consider a for in loop using flatten() instead of nested loops:
+```swift
+let arraysOfNames = [["Moe", "Larry", "Curly"], ["Groucho", "Chico", "Harpo", "Zeppo"]]
+```
+
+**Preferred:**
+```swift
+for name in arraysOfNames.flatten() {
+    print("\(name) is an old-timey comedian")
+}
+```
+
+**Not Preferred:**
+```swift
+for names in arraysOfNames {
+    for name in names {
+        print("\(name) is an old-timey comedian")
+    }
+}
+```
+
+Avoid the use of forEach except for simple one line closures, similar to makeObjectsPerformSelector: in Objective-C.
 
 ## Golden Path
 
