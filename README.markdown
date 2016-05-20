@@ -51,6 +51,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
 * [Parentheses](#parentheses)
 * [Operator Overloading And Custom Operators](#operator-overloading-and-custom-operators)
 * [Error Handling](#error-handling)
+  * [Forced-try Expression](#forced-try-expression)
 * [Copyright Statement](#copyright-statement)
 * [Smiley Face](#smiley-face)
 * [Credits](#credits)
