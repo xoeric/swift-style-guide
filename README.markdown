@@ -18,6 +18,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Class Prefixes](#class-prefixes)
   * [Extension Function Prefix](#extension-function-prefix)
   * [Language](#language)
+  * [Tuples](#tuples)
 * [Default Initializers](#default-initializers)
 * [Code Organization](#code-organization)
   * [Protocol Conformance](#protocol-conformance)
@@ -268,6 +269,17 @@ let color = "red"
 ```swift
 let colour = "red"
 ```
+
+### Tuples
+
+Name the members of your tuples when creating or decomposing tuples.
+
+**Preferred:**
+```swift
+let foo = (something: "cats", somethingElse: 909_099)
+let (something, somethingElse) = foo
+```
+
 ## Default Initializers
 Use [default initializers](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID213) where possible.
 
