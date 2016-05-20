@@ -49,7 +49,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Failing Guards](#failing-guards)
 * [Semicolons](#semicolons)
 * [Parentheses](#parentheses)
-* [Operator Overloading + Custom Operators](*operator-overloading-custom-operators)
+* [Operator Overloading And Custom Operators](#operator-overloading-and-custom-operators)
 * [Copyright Statement](#copyright-statement)
 * [Smiley Face](#smiley-face)
 * [Credits](#credits)
@@ -1092,7 +1092,7 @@ if (name == "Hello") {
 }
 ```
 
-## Operator Overloading + Custom Operators
+## Operator Overloading And Custom Operators
 
 The use of operator overloading and custom operators is strongly discouraged as this can hurt readability and potentially create a significant amount of confusion for other developers on a shared project. There are cases that it would be necessary (ex. overloading == to conform to Equatable). When writing a custom operator or overloading an existing one, the operator function should call another explicitly named function that performs that actual work. For more guidance on best practices on this matter, view the guidelines at the bottom of this NSHipster article [Guidelines for Swift Operators](http://nshipster.com/swift-operators/#guidelines-for-swift-operators).
 
