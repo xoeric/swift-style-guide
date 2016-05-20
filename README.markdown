@@ -46,6 +46,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Lazy Initialization](#lazy-initialization)
   * [Type Inference](#type-inference)
   * [Syntactic Sugar](#syntactic-sugar)
+  * [Typealiases](#typealiases)
 * [Functions vs Methods](#functions-vs-methods)
 * [Memory Management](#memory-management)
   * [Extending Lifetime](#extending-lifetime)
@@ -997,6 +998,21 @@ var faxNumber: Int?
 var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
+```
+
+### Typealiases
+* Create typealiases to give semantic meaning to commonly used datatypes and closures.
+* typealias is equivalent to typedef in C and should be used for making names for types.
+
+**Preferred:**
+```swift
+typealias IndexRange = Range<Int>
+
+typealias JSONObject = [String: AnyObject]
+
+typealias APICompletion = (jsonResult: [JSONObject]?, error: NSError?) -> Void
+
+typealias BasicBlock = () -> Void
 ```
 
 ## Functions vs Methods
