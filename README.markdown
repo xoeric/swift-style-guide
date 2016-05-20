@@ -20,6 +20,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Language](#language)
 * [Code Organization](#code-organization)
   * [Protocol Conformance](#protocol-conformance)
+  * [Delegate Protocols](#delegate-protocols)
   * [Unused Code](#unused-code)
   * [Minimal Imports](#minimal-imports)
 * [Spacing](#spacing)
@@ -297,6 +298,43 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
 Since the compiler does not allow you to re-declare protocol conformance in a derived class, it is not always required to replicate the extension groups of the base class. This is especially true if the derived class is a terminal class and a small number of methods are being overriden. When to preserve the extension groups is left to the discretion of the author.
 
 For UIKit view controllers, consider grouping lifecyle, custom accessors, and IBAction in separate class extensions.
+
+### Delegate Protocols
+* Delegate protocols should be limited to classes only by adding class to the protocol's inheritance list (as discussed in Class-Only Protocols).
+* If your protocol should have optional methods, it must be declared with the @objc attribute.
+* Protocol definitions should be declared near the class that uses the delegate, not the class that implements the delegate methods.
+* If more than one class uses the same protocol, it should be declared in its own file.
+* Delegate variables should be weak optional vars to avoid retain cycles.
+
+**Preferred:**
+```swift
+//SomeTableCell.swift
+
+protocol SomeTableCellDelegate: class {
+    func cellButtonWasTapped(cell: SomeTableCell)
+}
+
+class SomeTableCell: UITableViewCell {
+    weak var delegate: SomeTableCellDelegate?
+    // ...
+}
+```
+
+```swift
+//SomeTableViewController.swift
+
+class SomeTableViewController: UITableViewController {
+    // ...
+}
+
+// MARK: - SomeTableCellDelegate
+
+extension SomeTableViewController: SomeTableCellDelegate {
+    func cellButtonWasTapped(cell: SomeTableCell) {
+        // Implementation of cellbuttonwasTapped method
+    }
+}
+```
 
 ### Unused Code
 
