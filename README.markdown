@@ -52,6 +52,8 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Extending Lifetime](#extending-lifetime)
 * [Access Control](#access-control)
 * [Control Flow](#control-flow)
+  * [Enumerations](#enumerations)
+  * [Switch](#switch)
 * [Golden Path](#golden-path)
   * [Unwrapping Multiple Optionals](#unwrapping-multiple-optionals)
   * [Failing Guards](#failing-guards)
@@ -1094,6 +1096,7 @@ class TimeMachine {
 
 ## Control Flow
 
+### Enumerations
 Prefer the `for-in` style of `for` loop over the `while-condition-increment` style.
 
 **Preferred:**
@@ -1131,6 +1134,62 @@ while i < attendeeList.count {
   i += 1
 }
 ```
+
+### Switch
+* break is not needed between case statements (they don't fall through by default)
+* Use multiple values on a single case where it is appropriate:
+
+**Preferred:**
+```swift
+var someCharacter: Character
+
+...
+
+switch someCharacter {
+case "a", "e", "i", "o", "u":
+    print("\(someCharacter) is a vowel")
+...
+}
+```
+
+When pattern matching over an enum case with an associated value, use case .CASENAME(let ...) rather than case let ... syntax for value binding.
+
+**Preferred:**
+```swift
+enum AnEnum {
+    case Foo
+    case Bar(String)
+    case Baz
+}
+
+let anEnumInstanceWithAssociatedValue = AnEnum.Bar("hello")
+
+switch anEnumInstanceWithAssociatedValue {
+    case .Foo: print("Foo")
+    // Correct
+    case .Bar(let barValue): print(barValue) // "hello"
+    case .Baz: print("Baz")
+}
+```
+
+**Not Preferred:**
+```swift
+enum AnEnum {
+    case Foo
+    case Bar(String)
+    case Baz
+}
+
+let anEnumInstanceWithAssociatedValue = AnEnum.Bar("hello")
+
+switch anEnumInstanceWithAssociatedValue {
+    case .Foo: print("Foo")
+    // Incorrect
+    case let .Bar(barValue): print(barValue) // "hello"
+    case .Baz: print("Baz")
+}
+```
+
 ## Golden Path
 
 When coding with conditionals, the left hand margin of the code should be the "golden" or "happy" path. That is, don't nest `if` statements. Multiple return statements are OK. The `guard` statement is built for this.
