@@ -35,6 +35,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
   * [Shorthand Argument Syntax](#shorthand-argument-syntax)
   * [Implicit Return](#implicit-return)
   * [Chained Methods](#chained-methods) 
+  * [Simplify Xcode's Autocompletion Suggestions](#simplify-xcode's-autocompletion-suggestions)
 * [Types](#types)
   * [Constants](#constants)
   * [Static Methods and Variable Type Properties](#static-methods-and-variable-type-properties)
@@ -596,6 +597,42 @@ let value = numbers
    .map {$0 * 2}
    .filter {$0 > 50}
    .map {$0 + 10}
+```
+
+### Simplify Xcode's Autocompletion Suggestions
+
+Xcode will try to be helpful when autocompleting closures for you by giving you the full type signature of the closure (input type(s) and return type). Simplify that information so that it's easier to read.
+
+Remove return types of Void and parentheses around single input parameters. This is especialy relevant if the closure takes no input and returns no output.
+
+**Preferred:**
+```swift
+UIView.animateWithDuration(0.5) {
+    //no need to specify type information for a no input, no output closure
+}
+
+//note the formatting of this example is further changed from the suggestion for better readability
+UIView.animateWithDuration(0.5,
+    animations: {
+        ...    
+    },
+    completion: { complete in
+        //the return type is inferred to be `Void` and `complete` does not need parens
+    }
+)
+```
+
+**Not Preferred:**
+```swift
+UIView.animateWithDuration(0.5) { () -> Void in
+    ...
+}
+
+UIView.animateWithDuration(0.5, animations: { () -> Void in
+        ...   
+    }) { (complete) -> Void in
+        ...
+}
 ```
 
 ## Types
