@@ -7,7 +7,7 @@ Our overarching goals are conciseness, readability, and simplicity.
 Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/raywenderlich/objective-c-style-guide) too.
 
 ## Table of Contents
-
+* [Whitespace](#whitespace)
 * [Correctness](#correctness)
 * [Naming](#naming)
   * [Protocols](#protocols)
@@ -51,6 +51,31 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
 * [Smiley Face](#smiley-face)
 * [Credits](#credits)
 
+
+## Whitespace
+
+* 4 spaces for tab.
+* End files with a newline.
+* Make liberal use of vertical whitespace to divide code into logical chunks.
+* Don’t leave trailing whitespace.
+  * Not even leading indentation on blank lines.
+
+### Use whitespace around operator definitions
+Operators consist of punctuation characters, which can make them difficult to read when immediately followed by the punctuation for a type or value parameter list. Adding whitespace separates the two more clearly.
+
+**Preferred:**
+
+```swift
+func <| (lhs: Int, rhs: Int) -> Int
+func <|< <A>(lhs: A, rhs: A) -> A
+```
+
+**Not Preferred:**
+
+```swift
+func <|(lhs: Int, rhs: Int) -> Int
+func <|<<A>(lhs: A, rhs: A) -> A
+```
 
 ## Correctness
 
