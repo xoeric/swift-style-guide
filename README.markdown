@@ -45,6 +45,7 @@ Writing Objective-C? Check out our [Objective-C Style Guide](https://github.com/
 * [Access Control](#access-control)
 * [Control Flow](#control-flow)
 * [Golden Path](#golden-path)
+  * [Unwrapping Multiple Optionals](#unwrapping-multiple-optionals)
   * [Failing Guards](#failing-guards)
 * [Semicolons](#semicolons)
 * [Parentheses](#parentheses)
@@ -948,31 +949,103 @@ func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies 
 }
 ```
 
-When multiple optionals are unwrapped either with `guard` or `if let`, minimize nesting by using the compound version when possible. Example:
+### Unwrapping Multiple Optionals
+
+When using guard, if, or while to unwrap multiple optionals, each constant and/or variable should be broken up onto its own line, and followed by a , except for the last line, which should be followed by else { for guard, or { for if and while.
 
 **Preferred:**
 ```swift
-guard let number1 = number1, number2 = number2, number3 = number3 else { fatalError("impossible") }
-// do something with numbers
+guard let
+    constantOne = valueOne,
+    constantTwo = valueTwo,
+    constantThree = valueThree else {
+        return
+}
+
+if let
+    constantOne = valueOne,
+    constantTwo = valueTwo,
+    constantThree = valueThree {
+        // Code
+}
 ```
 
 **Not Preferred:**
 ```swift
-if let number1 = number1 {
-  if let number2 = number2 {
-    if let number3 = number3 {
-      // do something with numbers
-    }
-    else {
-      fatalError("impossible")
-    }
-  }
-  else {
-    fatalError("impossible")
-  }
+if let constantOne = valueOne,
+    let constantTwo = valueTwo,
+    let constantThree = valueThree {
+        // Code
 }
-else {
-  fatalError("impossible")
+
+guard let constantOne = valueOne,
+    constantTwo = valueTwo,
+    constantThree = valueThree
+    else {
+        return
+}
+
+if let
+    constantOne = valueOne,
+    constantTwo = valueTwo,
+    constantThree = valueThree
+    {
+        // Code
+}
+
+guard let constantOne = valueOne, constantTwo = valueTwo, constantThree = valueThree else {
+    return
+}
+
+if let constantOne = valueOne, let constantTwo = valueTwo, let constantThree = valueThree {
+    // Code
+}
+```
+
+When unwrapping multiple optionals with a mix of lets and vars, avoid mixing the two. Group them together by making a line-break after guard, if, or while, specify let or var on its own line, and list the constants and variables on their own lines.
+
+**Preferred:**
+```swift
+guard
+    let
+    constantOne = valueOne,
+    constantTwo = valueTwo,
+    constantThree = valueThree,
+    var
+    variableOne = valueFour,
+    variableTwo = valueFive,
+    variableThree = valueSix else {
+        return
+}
+
+if
+    let
+    constantOne = valueOne,
+    constantTwo = valueTwo,
+    constantThree = valueThree,
+    var
+    variableOne = valueFour,
+    variableTwo = valueFive,
+    variableThree = valueSix {
+        // Code
+}
+```
+
+**Not Preferred:**
+```swift
+guard let
+    constantOne = valueOne,
+    var variableOne = valueTwo,
+    let constantTwo = valueThree else {
+        return
+}
+
+if let constantOne = valueOne,
+    var variableOne = valueTwo,
+    variableTwo = valueThree,
+    variableThree = valueFour,
+    let constantTwo = valueFive {
+        // Code
 }
 ```
 
